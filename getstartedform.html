@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bigsparkmedia - Multilingual Project Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.2;
+                transform: scale(1.2);
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(249, 115, 22, 0.3);
+            border-radius: 50%;
+            animation: particle 20s infinite;
+        }
+
+        .gradient-orb-1 {
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 384px;
+            height: 384px;
+            background: rgba(249, 115, 22, 0.1);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: pulse 8s infinite;
+        }
+
+        .gradient-orb-2 {
+            position: absolute;
+            bottom: 25%;
+            right: 25%;
+            width: 384px;
+            height: 384px;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: pulse 8s infinite;
+            animation-delay: 4s;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        .header-scrolled {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input, textarea, select {
+            transition: border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: rgba(249, 115, 22, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-label:hover {
+            border-color: rgba(249, 115, 22, 0.3);
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #f97316;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-label:hover {
+            border-color: rgba(249, 115, 22, 0.3);
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        .radio-label input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #f97316;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+        }
+
+        .form-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .required::after {
+            content: " *";
+            color: #f97316;
+        }
+
+        .language-selector {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-selector:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .language-active {
+            background: rgba(249, 115, 22, 0.2);
+            border-color: rgba(249, 115, 22, 0.5);
+        }
+    </style>
+</head>
+<body class="scroll-smooth">
+    
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+                <img src="bigsparkmedia.png" alt="bigsparkmedia logo" class="h-20 w-auto">
+            </div>
+
+            <ul class="hidden md:flex items-center gap-8">
+                <li><button onclick="window.location.href='index.html'" class="hover:text-orange-500 transition-colors duration-300">Home</button></li>
+                <li><button onclick="window.location.href='index.html#services'" class="hover:text-orange-500 transition-colors duration-300">Services</button></li>
+                <li><button onclick="window.location.href='index.html#portfolio'" class="hover:text-orange-500 transition-colors duration-300">Portfolio</button></li>
+                <li><button onclick="window.location.href='form-detailed.html'" class="hover:text-orange-500 transition-colors duration-300">Project Form</button></li>
+            </ul>
+
+            <button onclick="window.location.href='form-detailed.html'" class="bg-orange-500 hover:bg-orange-600 px-6 py-2 rounded-full transition-all duration-300 hover-scale">
+                Get Quote
+            </button>
+        </nav>
+    </header>
+
+    <!-- Form Section -->
+    <section id="form" class="min-h-screen relative overflow-hidden pt-32 pb-20">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 20%; top: 60%; animation-delay: 4s;"></div>
+            <div class="particle" style="left: 70%; top: 70%; animation-delay: 6s;"></div>
+            <div class="particle" style="left: 40%; top: 40%; animation-delay: 8s;"></div>
+            <div class="particle" style="left: 60%; top: 80%; animation-delay: 10s;"></div>
+        </div>
+
+        <div class="gradient-orb-1"></div>
+        <div class="gradient-orb-2"></div>
+
+        <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-5xl">
+            <!-- Language Selector -->
+            <div class="flex justify-end mb-6">
+                <div class="flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-full p-1">
+                    <button onclick="setLanguage('en')" id="lang-en" class="language-selector language-active px-4 py-2 rounded-full">
+                        <span class="flex items-center gap-2">
+                            <span>🇺🇸</span>
+                            <span>English</span>
+                        </span>
+                    </button>
+                    <button onclick="setLanguage('tr')" id="lang-tr" class="language-selector px-4 py-2 rounded-full">
+                        <span class="flex items-center gap-2">
+                            <span>🇹🇷</span>
+                            <span>Türkçe</span>
+                        </span>
+                    </button>
+                    <button onclick="setLanguage('fr')" id="lang-fr" class="language-selector px-4 py-2 rounded-full">
+                        <span class="flex items-center gap-2">
+                            <span>🇫🇷</span>
+                            <span>Français</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Header -->
+            <div class="text-center mb-12">
+                <span class="text-orange-500 tracking-wider uppercase text-sm" id="form-subtitle">Project Information</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6" id="form-title">Web Project Information Form</h1>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto" id="form-description">
+                    Please fill out this detailed form to help us understand your project requirements better and provide you with an accurate quote.
+                </p>
+            </div>
+
+            <!-- Main Form (English by default) -->
+            <form action="https://formspree.io/f/xkgdzrzk" method="POST" class="space-y-8">
+                
+                <!-- Section 1: Basic Information -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>📋</span>
+                        <span id="section1-title">Web Project Information Form (Client Information Collection)</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-sm mb-2 required" id="name-label">1. Name and Surname</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                class="w-full rounded-xl px-4 py-3"
+                                placeholder="Your name and surname"
+                            >
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm mb-2 required" id="email-label">2. Email Address</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                                class="w-full rounded-xl px-4 py-3"
+                                placeholder="example@email.com"
+                            >
+                        </div>
+
+                        <!-- Company Name -->
+                        <div>
+                            <label for="company" class="block text-sm mb-2 required" id="company-label">3. Company / Brand Name</label>
+                            <input
+                                type="text"
+                                id="company"
+                                name="company"
+                                required
+                                class="w-full rounded-xl px-4 py-3"
+                                placeholder="Your company or brand name"
+                            >
+                        </div>
+
+                        <!-- Location -->
+                        <div>
+                            <label for="location" class="block text-sm mb-2" id="location-label">4. Location (City / Country)</label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                class="w-full rounded-xl px-4 py-3"
+                                placeholder="e.g., Istanbul, Turkey"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Social Media -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>🌐</span>
+                        <span id="section2-title">5. Social Media Accounts</span>
+                    </div>
+                    <p class="text-gray-400 mb-4" id="section2-desc">(Instagram, Facebook, LinkedIn, TikTok, YouTube, etc.)</p>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="instagram" class="block text-sm mb-2">Instagram</label>
+                            <input
+                                type="url"
+                                id="instagram"
+                                name="instagram"
+                                class="w-full rounded-xl px-4 py-3"
+                                placeholder="https://instagram.com/username"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="facebook" class="block text-sm mb-2">Facebook</label>
+                            <input
+                                type="url"
+                                id="facebook"
+                                name="facebook"
+                                class="w-full rounded-xl px-4 py-3"
+                                placeholder="https://facebook.com/pagename"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="linkedin" class="block text-sm mb-2">LinkedIn</label>
+                            <input
+                                type="url"
+                                id="linkedin"
+                                name="linkedin"
+                                class="w-full rounded-xl px-4 py-3"
+                                placeholder="https://linkedin.com/company/companyname"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="other_social" class="block text-sm mb-2" id="other-social-label">Other Social Media Accounts</label>
+                            <textarea
+                                id="other_social"
+                                name="other_social"
+                                rows="2"
+                                class="w-full rounded-xl px-4 py-3 resize-none"
+                                placeholder="You can write your other social media accounts here..."
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Target Audience -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>🎯</span>
+                        <span id="section3-title">6. Target Audience</span>
+                    </div>
+                    <p class="text-gray-400 mb-4" id="section3-desc">(Who is the audience you sell to or appeal to?)</p>
+                    
+                    <div>
+                        <textarea
+                            id="target_audience"
+                            name="target_audience"
+                            rows="4"
+                            class="w-full rounded-xl px-4 py-3 resize-none"
+                            placeholder="e.g., Professionals aged 25-45, small businesses doing e-commerce, students..."
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 4: Website Structure -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>📄</span>
+                        <span id="section4-title">Website Structure</span>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label for="page_count" class="block text-sm mb-2" id="page-count-label">7. How many pages do you want on your website? (Estimated number)</label>
+                            <select
+                                id="page_count"
+                                name="page_count"
+                                class="w-full rounded-xl px-4 py-3"
+                            >
+                                <option value="" id="select-option">Select</option>
+                                <option value="1-5">1-5 pages</option>
+                                <option value="6-10">6-10 pages</option>
+                                <option value="11-15">11-15 pages</option>
+                                <option value="15+">15+ pages</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="page_types" class="block text-sm mb-2" id="page-types-label">8. Which pages will it consist of?</label>
+                            <p class="text-gray-400 mb-4" id="page-types-desc">(For example: Home, About, Services, Products, Blog, Contact, etc.)</p>
+                            <textarea
+                                id="page_types"
+                                name="page_types"
+                                rows="4"
+                                class="w-full rounded-xl px-4 py-3 resize-none"
+                                placeholder="Please list the pages you want..."
+                            ></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="website_style" class="block text-sm mb-2" id="style-label">9. What kind of website do you want?</label>
+                            <p class="text-gray-400 mb-4" id="style-desc">(Briefly describe - e.g.: modern, minimal, corporate, simple, creative, sales-oriented, etc.)</p>
+                            <textarea
+                                id="website_style"
+                                name="website_style"
+                                rows="4"
+                                class="w-full rounded-xl px-4 py-3 resize-none"
+                                placeholder="Describe how you want your website to look..."
+                            ></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="reference_website" class="block text-sm mb-2" id="reference-label">10. Do you have a website you like?</label>
+                            <p class="text-gray-400 mb-4" id="reference-desc">(If you have a reference website link, you can share it.)</p>
+                            <textarea
+                                id="reference_website"
+                                name="reference_website"
+                                rows="3"
+                                class="w-full rounded-xl px-4 py-3 resize-none"
+                                placeholder="You can write the links of the websites you like here..."
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Expected Features -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>🧩</span>
+                        <span id="section5-title">Expected Features (Checkbox Area)</span>
+                    </div>
+                    <p class="text-gray-400 mb-6" id="section5-desc">Check the options you want to have on your website from the features below:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="form">
+                            <span id="feature1">Form (contact, quote, reservation, etc.)</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="email_integration">
+                            <span id="feature2">Email integration (MailChimp, Gmail, SMTP, etc.)</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="online_payment">
+                            <span id="feature3">Online payment system</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="multi_language">
+                            <span id="feature4">Multilingual structure (TR/EN, etc.)</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="blog">
+                            <span id="feature5">Blog / News area</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="appointment">
+                            <span id="feature6">Appointment system</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="product_catalog">
+                            <span id="feature7">Product catalog (without sales)</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="ecommerce">
+                            <span id="feature8">E-commerce infrastructure (add to cart + payment)</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="seo">
+                            <span id="feature9">SEO work</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="speed_optimization">
+                            <span id="feature10">Speed optimization</span>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="features[]" value="security">
+                            <span id="feature11">Security certificates (SSL, etc.)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section 6: Content & Media -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>📸</span>
+                        <span id="section6-title">Visual and Content Provision</span>
+                    </div>
+                    <p class="text-gray-400 mb-6" id="section6-desc">Photo, video and text content to be used on the site:</p>
+                    
+                    <div class="space-y-4">
+                        <label class="radio-label">
+                            <input type="radio" name="content_provider" value="client_provides" required>
+                            <span id="content-option1">⬜ Our company will provide</span>
+                        </label>
+                        
+                        <label class="radio-label">
+                            <input type="radio" name="content_provider" value="you_provide" required>
+                            <span id="content-option2">⬜ We want you to find/prepare</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section 7: Timeline -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>⏳</span>
+                        <span id="section7-title">Desired Delivery Time</span>
+                    </div>
+                    <p class="text-gray-400 mb-4" id="section7-desc">(Your requested delivery date or timeframe)</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="timeline_preference" class="block text-sm mb-2" id="timeline-label">Preferred Timeframe</label>
+                            <select
+                                id="timeline_preference"
+                                name="timeline_preference"
+                                class="w-full rounded-xl px-4 py-3"
+                            >
+                                <option value="" id="select-timeline">Select</option>
+                                <option value="urgent">Urgent (1-2 weeks)</option>
+                                <option value="1_month">1 Month</option>
+                                <option value="1-3_months">1-3 Months</option>
+                                <option value="3-6_months">3-6 Months</option>
+                                <option value="flexible">Flexible</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="desired_date" class="block text-sm mb-2" id="date-label">Desired Delivery Date</label>
+                            <input
+                                type="date"
+                                id="desired_date"
+                                name="desired_date"
+                                class="w-full rounded-xl px-4 py-3"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 8: Budget -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>💰</span>
+                        <span id="section8-title">Budget Range</span>
+                    </div>
+                    <p class="text-gray-400 mb-4" id="section8-desc">(Stating this helps pricing to be done more accurately)</p>
+                    
+                    <div>
+                        <select
+                            id="budget_range"
+                            name="budget_range"
+                            class="w-full rounded-xl px-4 py-3"
+                        >
+                            <option value="" id="select-budget">Select budget range</option>
+                            <option value="1000-3000">$1,000 - $3,000</option>
+                            <option value="3000-7000">$3,000 - $7,000</option>
+                            <option value="7000-15000">$7,000 - $15,000</option>
+                            <option value="15000+">$15,000+</option>
+                            <option value="not_sure" id="not-sure">Not sure yet</option>
+                            <option value="custom" id="custom-budget">Custom budget (I will explain)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mt-4" id="custom_budget_container" style="display: none;">
+                        <label for="custom_budget" class="block text-sm mb-2" id="custom-budget-label">Custom Budget Description</label>
+                        <textarea
+                            id="custom_budget"
+                            name="custom_budget"
+                            rows="3"
+                            class="w-full rounded-xl px-4 py-3 resize-none"
+                            placeholder="You can provide more information about your budget..."
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 9: Site Management -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>🔧</span>
+                        <span id="section9-title">Site Management - (Configuration Option Description)</span>
+                    </div>
+                    <p class="text-gray-400 mb-6" id="section9-desc">Select one of the following options regarding the management of the site after delivery:</p>
+                    
+                    <div class="space-y-4">
+                        <label class="radio-label">
+                            <input type="radio" name="site_management" value="client_manages" required>
+                            <div>
+                                <span class="font-bold" id="option1-title">Option 1 — You Will Manage:</span>
+                                <p class="text-gray-400 text-sm mt-1" id="option1-desc">The site will be built on a user-friendly platform. You will be given admin panel access and necessary training/guidance will be provided. In this case, the quote will be determined according to the platform.</p>
+                            </div>
+                        </label>
+                        
+                        <label class="radio-label">
+                            <input type="radio" name="site_management" value="we_manage" required>
+                            <div>
+                                <span class="font-bold" id="option2-title">Option 2 — We Will Manage:</span>
+                                <p class="text-gray-400 text-sm mt-1" id="option2-desc">The site will be managed by us and updates, content additions, technical maintenance will be done by us. In this case, a separate quote will be provided for the management service.</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="form-section">
+                    <div class="form-title">
+                        <span>📝</span>
+                        <span id="section10-title">Additional Notes</span>
+                    </div>
+                    
+                    <div>
+                        <label for="additional_notes" class="block text-sm mb-2" id="notes-label">Is there anything else you would like to add?</label>
+                        <textarea
+                            id="additional_notes"
+                            name="additional_notes"
+                            rows="4"
+                            class="w-full rounded-xl px-4 py-3 resize-none"
+                            placeholder="Additional information about your project, special requests or questions..."
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center pt-8">
+                    <button type="submit" class="bg-orange-500 hover:bg-orange-600 px-12 py-4 rounded-full transition-colors duration-300 hover-scale text-lg font-semibold" id="submit-button">
+                        📤 Submit Form
+                    </button>
+                    <p class="text-gray-400 text-sm mt-4" id="submit-note">
+                        We will contact you within 24 hours after you submit the form.
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <img src="bigsparkmedia.jpg" alt="bigsparkmedia logo" class="h-20 w-auto mb-4">
+                    <p class="text-gray-400 text-sm">
+                        Creating digital excellence through innovative design and development.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Navigation</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="index.html" class="hover:text-orange-500 transition-colors">Home</a></li>
+                        <li><a href="index.html#services" class="hover:text-orange-500 transition-colors">Services</a></li>
+                        <li><a href="index.html#portfolio" class="hover:text-orange-500 transition-colors">Portfolio</a></li>
+                        <li><a href="form-detailed.html" class="hover:text-orange-500 transition-colors">Project Form</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>bigsparkmedia0@gmail.com</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Vancouver, CANADA</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="https://www.linkedin.com/feed/" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-orange-500/20 hover:text-orange-500 transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="https://islamerkale.github.io/portfolio/index.html" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-orange-500/20 hover:text-orange-500 transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/bigsparkmedia/" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-orange-500/20 hover:text-orange-500 transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 text-center text-gray-400 text-sm">
+                <p>© 2023 Bigsparkmedia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language data
+        const translations = {
+            en: {
+                // Header
+                'form-subtitle': 'Project Information',
+                'form-title': 'Web Project Information Form',
+                'form-description': 'Please fill out this detailed form to help us understand your project requirements better and provide you with an accurate quote.',
+                
+                // Section 1
+                'section1-title': 'Web Project Information Form (Client Information Collection)',
+                'name-label': '1. Name and Surname',
+                'name-placeholder': 'Your name and surname',
+                'email-label': '2. Email Address',
+                'email-placeholder': 'example@email.com',
+                'company-label': '3. Company / Brand Name',
+                'company-placeholder': 'Your company or brand name',
+                'location-label': '4. Location (City / Country)',
+                'location-placeholder': 'e.g., Istanbul, Turkey',
+                
+                // Section 2
+                'section2-title': '5. Social Media Accounts',
+                'section2-desc': '(Instagram, Facebook, LinkedIn, TikTok, YouTube, etc.)',
+                'other-social-label': 'Other Social Media Accounts',
+                'other-social-placeholder': 'You can write your other social media accounts here...',
+                
+                // Section 3
+                'section3-title': '6. Target Audience',
+                'section3-desc': '(Who is the audience you sell to or appeal to?)',
+                'target-audience-placeholder': 'e.g., Professionals aged 25-45, small businesses doing e-commerce, students...',
+                
+                // Section 4
+                'section4-title': 'Website Structure',
+                'page-count-label': '7. How many pages do you want on your website? (Estimated number)',
+                'select-option': 'Select',
+                'page-types-label': '8. Which pages will it consist of?',
+                'page-types-desc': '(For example: Home, About, Services, Products, Blog, Contact, etc.)',
+                'page-types-placeholder': 'Please list the pages you want...',
+                'style-label': '9. What kind of website do you want?',
+                'style-desc': '(Briefly describe - e.g.: modern, minimal, corporate, simple, creative, sales-oriented, etc.)',
+                'style-placeholder': 'Describe how you want your website to look...',
+                'reference-label': '10. Do you have a website you like?',
+                'reference-desc': '(If you have a reference website link, you can share it.)',
+                'reference-placeholder': 'You can write the links of the websites you like here...',
+                
+                // Section 5
+                'section5-title': 'Expected Features (Checkbox Area)',
+                'section5-desc': 'Check the options you want to have on your website from the features below:',
+                'feature1': 'Form (contact, quote, reservation, etc.)',
+                'feature2': 'Email integration (MailChimp, Gmail, SMTP, etc.)',
+                'feature3': 'Online payment system',
+                'feature4': 'Multilingual structure (TR/EN, etc.)',
+                'feature5': 'Blog / News area',
+                'feature6': 'Appointment system',
+                'feature7': 'Product catalog (without sales)',
+                'feature8': 'E-commerce infrastructure (add to cart + payment)',
+                'feature9': 'SEO work',
+                'feature10': 'Speed optimization',
+                'feature11': 'Security certificates (SSL, etc.)',
+                
+                // Section 6
+                'section6-title': 'Visual and Content Provision',
+                'section6-desc': 'Photo, video and text content to be used on the site:',
+                'content-option1': '⬜ Our company will provide',
+                'content-option2': '⬜ We want you to find/prepare',
+                
+                // Section 7
+                'section7-title': 'Desired Delivery Time',
+                'section7-desc': '(Your requested delivery date or timeframe)',
+                'timeline-label': 'Preferred Timeframe',
+                'select-timeline': 'Select',
+                'date-label': 'Desired Delivery Date',
+                
+                // Section 8
+                'section8-title': 'Budget Range',
+                'section8-desc': '(Stating this helps pricing to be done more accurately)',
+                'select-budget': 'Select budget range',
+                'not-sure': 'Not sure yet',
+                'custom-budget': 'Custom budget (I will explain)',
+                'custom-budget-label': 'Custom Budget Description',
+                'custom-budget-placeholder': 'You can provide more information about your budget...',
+                
+                // Section 9
+                'section9-title': 'Site Management - (Configuration Option Description)',
+                'section9-desc': 'Select one of the following options regarding the management of the site after delivery:',
+                'option1-title': 'Option 1 — You Will Manage:',
+                'option1-desc': 'The site will be built on a user-friendly platform. You will be given admin panel access and necessary training/guidance will be provided. In this case, the quote will be determined according to the platform.',
+                'option2-title': 'Option 2 — We Will Manage:',
+                'option2-desc': 'The site will be managed by us and updates, content additions, technical maintenance will be done by us. In this case, a separate quote will be provided for the management service.',
+                
+                // Section 10
+                'section10-title': 'Additional Notes',
+                'notes-label': 'Is there anything else you would like to add?',
+                'notes-placeholder': 'Additional information about your project, special requests or questions...',
+                
+                // Submit
+                'submit-button': '📤 Submit Form',
+                'submit-note': 'We will contact you within 24 hours after you submit the form.'
+            },
+            
+            tr: {
+                // Header
+                'form-subtitle': 'Proje Bilgileri',
+                'form-title': 'Web Sitesi Proje Bilgi Formu',
+                'form-description': 'Proje gereksinimlerinizi daha iyi anlamamız ve size doğru bir teklif sunabilmemiz için lütfen bu detaylı formu doldurun.',
+                
+                // Section 1
+                'section1-title': 'Web Sitesi Proje Bilgi Formu (Müşteri Bilgi Toplama)',
+                'name-label': '1. İsim ve Soyisim',
+                'name-placeholder': 'Adınız ve soyadınız',
+                'email-label': '2. E-posta Adresi',
+                'email-placeholder': 'ornek@email.com',
+                'company-label': '3. Firma / Marka Adı',
+                'company-placeholder': 'Firmanızın veya markanızın adı',
+                'location-label': '4. Lokasyon (Şehir / Ülke)',
+                'location-placeholder': 'Örn: İstanbul, Türkiye',
+                
+                // Section 2
+                'section2-title': '5. Sosyal Medya Hesapları',
+                'section2-desc': '(Instagram, Facebook, LinkedIn, TikTok, YouTube, vb.)',
+                'other-social-label': 'Diğer Sosyal Medya Hesapları',
+                'other-social-placeholder': 'Diğer sosyal medya hesaplarınızı buraya yazabilirsiniz...',
+                
+                // Section 3
+                'section3-title': '6. Hedef Kitle',
+                'section3-desc': '(Satış yaptığınız veya hitap ettiğiniz kitle kimdir?)',
+                'target-audience-placeholder': 'Örn: 25-45 yaş arası profesyoneller, e-ticaret yapan küçük işletmeler, öğrenciler...',
+                
+                // Section 4
+                'section4-title': 'Web Sitesi Yapısı',
+                'page-count-label': '7. Kaç sayfalık bir site istiyorsunuz? (Tahmini sayı)',
+                'select-option': 'Seçiniz',
+                'page-types-label': '8. Hangi sayfalardan oluşacak?',
+                'page-types-desc': '(Örneğin: Ana Sayfa, Hakkımızda, Hizmetler, Ürünler, Blog, İletişim, vb.)',
+                'page-types-placeholder': 'Lütfen istediğiniz sayfaları listeleyin...',
+                'style-label': '9. Nasıl bir site istiyorsunuz?',
+                'style-desc': '(Kısa özetle anlatın — örn: modern, minimal, kurumsal, sade, yaratıcı, satış odaklı vb.)',
+                'style-placeholder': 'Web sitenizin nasıl görünmesini istediğinizi açıklayın...',
+                'reference-label': '10. Beğendiğiniz bir web sitesi var mı?',
+                'reference-desc': '(Referans site linki varsa paylaşabilirsiniz.)',
+                'reference-placeholder': 'Beğendiğiniz web site linklerini buraya yazabilirsiniz...',
+                
+                // Section 5
+                'section5-title': 'Beklenen Özellikler (İşaretleme Alanı)',
+                'section5-desc': 'Aşağıdaki özelliklerden sitenizde olmasını istediğiniz seçenekleri işaretleyin:',
+                'feature1': 'Form (iletişim, teklif, rezervasyon vb.)',
+                'feature2': 'E-posta entegrasyonu (MailChimp, Gmail, SMTP vb.)',
+                'feature3': 'Online ödeme sistemi',
+                'feature4': 'Çok dilli yapı (TR/EN vb.)',
+                'feature5': 'Blog / Haber alanı',
+                'feature6': 'Randevu sistemi',
+                'feature7': 'Ürün kataloğu (satışsız)',
+                'feature8': 'E-ticaret altyapısı (sepete ekle + ödeme)',
+                'feature9': 'SEO çalışması',
+                'feature10': 'Hız optimizasyonu',
+                'feature11': 'Güvenlik sertifikaları (SSL vb.)',
+                
+                // Section 6
+                'section6-title': 'Görsel ve İçerik Sağlama',
+                'section6-desc': 'Sitede kullanılacak fotoğraf, video ve yazı içerikleri:',
+                'content-option1': '⬜ Firmamız sağlayacak',
+                'content-option2': '⬜ Sizin bulmanızı / hazırlamanızı istiyoruz',
+                
+                // Section 7
+                'section7-title': 'İstenilen Teslim Süresi',
+                'section7-desc': '(Talep ettiğiniz teslim tarihi veya süresi)',
+                'timeline-label': 'Tercih Edilen Süre',
+                'select-timeline': 'Seçiniz',
+                'date-label': 'İstenilen Teslim Tarihi',
+                
+                // Section 8
+                'section8-title': 'Bütçe Aralığı',
+                'section8-desc': '(Belirtmeniz fiyatlandırmanın daha sağlıklı yapılmasına yardımcı olur)',
+                'select-budget': 'Bütçe aralığını seçin',
+                'not-sure': 'Henüz emin değilim',
+                'custom-budget': 'Özel bütçe (açıklayacağım)',
+                'custom-budget-label': 'Özel Bütçe Açıklaması',
+                'custom-budget-placeholder': 'Bütçeniz hakkında daha fazla bilgi verebilirsiniz...',
+                
+                // Section 9
+                'section9-title': 'Site Yönetimi — (Yapılandırma Seçeneği Açıklaması)',
+                'section9-desc': 'Sitenin teslim sonrası yönetimi konusunda aşağıdaki seçeneklerden birini seçiniz:',
+                'option1-title': 'Seçenek 1 — Siz Yöneteceksiniz:',
+                'option1-desc': 'Site, kullanıcı dostu bir platformda kurulacaktır. Size yönetim paneli erişimi verilecektir ve gerekli eğitim/rehber sağlanacaktır. Bu durumda teklif platforma göre belirlenecektir.',
+                'option2-title': 'Seçenek 2 — Biz Yöneteceğiz:',
+                'option2-desc': 'Site tarafımızca yönetilecek ve güncellemeler, içerik eklemeleri, teknik bakım tarafımızdan yapılacaktır. Bu durumda yönetim hizmeti için ayrıca teklif sunulacaktır.',
+                
+                // Section 10
+                'section10-title': 'Ek Notlar',
+                'notes-label': 'Eklemek istediğiniz başka bir şey var mı?',
+                'notes-placeholder': 'Projeniz hakkında ek bilgiler, özel istekler veya sorularınız...',
+                
+                // Submit
+                'submit-button': '📤 Formu Gönder',
+                'submit-note': 'Formu gönderdikten sonra 24 saat içinde sizinle iletişime geçeceğiz.'
+            },
+            
+            fr: {
+                // Header
+                'form-subtitle': 'Informations sur le Projet',
+                'form-title': 'Formulaire d\'Information sur le Projet Web',
+                'form-description': 'Veuillez remplir ce formulaire détaillé pour nous aider à mieux comprendre les exigences de votre projet et vous fournir un devis précis.',
+                
+                // Section 1
+                'section1-title': 'Formulaire d\'Information sur le Projet Web (Collecte d\'Informations Client)',
+                'name-label': '1. Nom et Prénom',
+                'name-placeholder': 'Votre nom et prénom',
+                'email-label': '2. Adresse E-mail',
+                'email-placeholder': 'exemple@email.com',
+                'company-label': '3. Nom de l\'Entreprise / Marque',
+                'company-placeholder': 'Nom de votre entreprise ou marque',
+                'location-label': '4. Localisation (Ville / Pays)',
+                'location-placeholder': 'ex. : Istanbul, Turquie',
+                
+                // Section 2
+                'section2-title': '5. Comptes de Réseaux Sociaux',
+                'section2-desc': '(Instagram, Facebook, LinkedIn, TikTok, YouTube, etc.)',
+                'other-social-label': 'Autres Comptes de Réseaux Sociaux',
+                'other-social-placeholder': 'Vous pouvez écrire vos autres comptes de réseaux sociaux ici...',
+                
+                // Section 3
+                'section3-title': '6. Public Cible',
+                'section3-desc': '(Qui est le public auquel vous vendez ou que vous ciblez ?)',
+                'target-audience-placeholder': 'ex. : Professionnels de 25 à 45 ans, petites entreprises faisant du e-commerce, étudiants...',
+                
+                // Section 4
+                'section4-title': 'Structure du Site Web',
+                'page-count-label': '7. Combien de pages souhaitez-vous sur votre site web ? (Nombre estimé)',
+                'select-option': 'Sélectionner',
+                'page-types-label': '8. De quelles pages sera-t-il composé ?',
+                'page-types-desc': '(Par exemple : Accueil, À propos, Services, Produits, Blog, Contact, etc.)',
+                'page-types-placeholder': 'Veuillez lister les pages que vous souhaitez...',
+                'style-label': '9. Quel type de site web souhaitez-vous ?',
+                'style-desc': '(Décrivez brièvement - ex. : moderne, minimal, corporatif, simple, créatif, axé sur les ventes, etc.)',
+                'style-placeholder': 'Décrivez l\'apparence que vous souhaitez pour votre site web...',
+                'reference-label': '10. Avez-vous un site web que vous aimez ?',
+                'reference-desc': '(Si vous avez un lien de site web de référence, vous pouvez le partager.)',
+                'reference-placeholder': 'Vous pouvez écrire les liens des sites web que vous aimez ici...',
+                
+                // Section 5
+                'section5-title': 'Fonctionnalités Attendues (Zone de Sélection)',
+                'section5-desc': 'Cochez les options que vous souhaitez avoir sur votre site web parmi les fonctionnalités ci-dessous :',
+                'feature1': 'Formulaire (contact, devis, réservation, etc.)',
+                'feature2': 'Intégration e-mail (MailChimp, Gmail, SMTP, etc.)',
+                'feature3': 'Système de paiement en ligne',
+                'feature4': 'Structure multilingue (FR/EN, etc.)',
+                'feature5': 'Zone Blog / Actualités',
+                'feature6': 'Système de rendez-vous',
+                'feature7': 'Catalogue de produits (sans vente)',
+                'feature8': 'Infrastructure e-commerce (ajouter au panier + paiement)',
+                'feature9': 'Travaux SEO',
+                'feature10': 'Optimisation de la vitesse',
+                'feature11': 'Certificats de sécurité (SSL, etc.)',
+                
+                // Section 6
+                'section6-title': 'Fourniture de Contenu Visuel et Textuel',
+                'section6-desc': 'Photos, vidéos et contenu textuel à utiliser sur le site :',
+                'content-option1': '⬜ Notre entreprise fournira',
+                'content-option2': '⬜ Nous voulons que vous trouviez/prépariez',
+                
+                // Section 7
+                'section7-title': 'Délai de Livraison Souhaité',
+                'section7-desc': '(Date ou période de livraison demandée)',
+                'timeline-label': 'Période Préférée',
+                'select-timeline': 'Sélectionner',
+                'date-label': 'Date de Livraison Souhaitée',
+                
+                // Section 8
+                'section8-title': 'Plage Budgétaire',
+                'section8-desc': '(Indiquer ceci aide à établir un devis plus précis)',
+                'select-budget': 'Sélectionnez la fourchette budgétaire',
+                'not-sure': 'Pas encore sûr',
+                'custom-budget': 'Budget personnalisé (je vais expliquer)',
+                'custom-budget-label': 'Description du Budget Personnalisé',
+                'custom-budget-placeholder': 'Vous pouvez fournir plus d\'informations sur votre budget...',
+                
+                // Section 9
+                'section9-title': 'Gestion du Site — (Description de l\'Option de Configuration)',
+                'section9-desc': 'Sélectionnez l\'une des options suivantes concernant la gestion du site après la livraison :',
+                'option1-title': 'Option 1 — Vous Gérerez :',
+                'option1-desc': 'Le site sera construit sur une plateforme conviviale. Vous aurez accès au panneau d\'administration et une formation/guide nécessaire sera fourni. Dans ce cas, le devis sera déterminé en fonction de la plateforme.',
+                'option2-title': 'Option 2 — Nous Gérerons :',
+                'option2-desc': 'Le site sera géré par nous et les mises à jour, ajouts de contenu, maintenance technique seront effectués par nous. Dans ce cas, un devis séparé sera fourni pour le service de gestion.',
+                
+                // Section 10
+                'section10-title': 'Notes Supplémentaires',
+                'notes-label': 'Y a-t-il autre chose que vous souhaiteriez ajouter ?',
+                'notes-placeholder': 'Informations supplémentaires sur votre projet, demandes spéciales ou questions...',
+                
+                // Submit
+                'submit-button': '📤 Soumettre le Formulaire',
+                'submit-note': 'Nous vous contacterons dans les 24 heures suivant la soumission du formulaire.'
+            }
+        };
+
+        // Current language
+        let currentLanguage = 'en';
+
+        // Language switching function
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update language selector UI
+            document.querySelectorAll('.language-selector').forEach(btn => {
+                btn.classList.remove('language-active');
+            });
+            document.getElementById(`lang-${lang}`).classList.add('language-active');
+            
+            // Update all translatable elements
+            const translation = translations[lang];
+            for (const [key, value] of Object.entries(translation)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key.includes('placeholder')) {
+                        // Handle placeholders
+                        const targetId = key.replace('-placeholder', '');
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            targetElement.placeholder = value;
+                        }
+                    } else {
+                        // Handle text content
+                        element.textContent = value;
+                    }
+                }
+            }
+            
+            // Update select options
+            updateSelectOptions(lang);
+        }
+
+        // Update select options based on language
+        function updateSelectOptions(lang) {
+            const selectOptions = {
+                'page_count': {
+                    en: ['1-5 pages', '6-10 pages', '11-15 pages', '15+ pages'],
+                    tr: ['1-5 sayfa', '6-10 sayfa', '11-15 sayfa', '15+ sayfa'],
+                    fr: ['1-5 pages', '6-10 pages', '11-15 pages', '15+ pages']
+                },
+                'timeline_preference': {
+                    en: ['Urgent (1-2 weeks)', '1 Month', '1-3 Months', '3-6 Months', 'Flexible'],
+                    tr: ['Acil (1-2 hafta)', '1 Ay', '1-3 Ay', '3-6 Ay', 'Esnek'],
+                    fr: ['Urgent (1-2 semaines)', '1 Mois', '1-3 Mois', '3-6 Mois', 'Flexible']
+                }
+            };
+            
+            // Update select options
+            for (const [selectId, options] of Object.entries(selectOptions)) {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    // Skip the first option (placeholder/select)
+                    for (let i = 1; i < select.options.length; i++) {
+                        select.options[i].textContent = options[lang][i-1];
+                    }
+                }
+            }
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Custom budget field toggle
+        document.getElementById('budget_range').addEventListener('change', function() {
+            const customBudgetContainer = document.getElementById('custom_budget_container');
+            if (this.value === 'custom') {
+                customBudgetContainer.style.display = 'block';
+            } else {
+                customBudgetContainer.style.display = 'none';
+            }
+        });
+
+        // Form submission handling
+        document.querySelector('form').addEventListener('submit', function(event) {
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Set loading text based on language
+            const loadingTexts = {
+                en: 'Sending...',
+                tr: 'Gönderiliyor...',
+                fr: 'Envoi en cours...'
+            };
+            
+            submitBtn.innerHTML = loadingTexts[currentLanguage];
+            submitBtn.disabled = true;
+            
+            // Allow Formspree to handle the submission
+            console.log('Detailed form submitted to Formspree in', currentLanguage);
+            
+            // Reset button after 3 seconds (in case of error)
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 3000);
+        });
+
+        // Auto-expand textareas
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        });
+
+        // Initialize form with English
+        document.addEventListener('DOMContentLoaded', function() {
+            setLanguage('en');
+        });
+    </script>
+</body>
+</html>
