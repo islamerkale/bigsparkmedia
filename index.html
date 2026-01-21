@@ -179,15 +179,32 @@
             opacity: 1;
         }
 
-        input, textarea {
+        input, textarea, select {
             transition: border-color 0.3s ease;
         }
 
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: rgba(249, 115, 22, 0.5);
         }
 
+        .quick-form-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .form-success.show {
+            display: block;
+        }
+        
         .stat-number {
             animation: countUp 2s ease-out;
         }
@@ -222,11 +239,10 @@
             </ul>
 
             <a href="getstartedform.html">
-    <button class="bg-orange-500 hover:bg-orange-600 px-6 py-2 rounded-full transition-all duration-300 hover-scale">
-        Get Started
-    </button>
-</a>
-
+                <button class="bg-orange-500 hover:bg-orange-600 px-6 py-2 rounded-full transition-all duration-300 hover-scale">
+                    Get Started
+                </button>
+            </a>
         </nav>
     </header>
 
@@ -262,8 +278,8 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center animate-in" style="animation-delay: 0.6s;">
-                    <button onclick="scrollToSection('services')" class="bg-orange-500 hover:bg-orange-600 px-8 py-4 rounded-full transition-colors duration-300 hover-scale">
-                        Explore Our Services
+                    <button onclick="scrollToSection('contact')" class="bg-orange-500 hover:bg-orange-600 px-8 py-4 rounded-full transition-colors duration-300 hover-scale">
+                        Quick Contact
                     </button>
                     <button onclick="scrollToSection('portfolio')" class="border border-white/20 hover:border-orange-500/50 px-8 py-4 rounded-full transition-colors duration-300 hover-scale">
                         View Our Work
@@ -272,7 +288,7 @@
             </div>
         </div>
 
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer" onclick="scrollToSection('services')" style="animation: float 2s infinite;">
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer" onclick="scrollToSection('contact')" style="animation: float 2s infinite;">
             <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
@@ -507,8 +523,6 @@
                             <span class="text-gray-300">bigsparkmedia0@gmail.com</span>
                         </div>
 
-                       
-
                         <div class="flex items-center gap-4 group hover-lift">
                             <div class="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center group-hover:bg-orange-500/20 transition-colors duration-300 icon-rotate">
                                 <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -521,71 +535,113 @@
                     </div>
                 </div>
 
-                <div>
-                    <!-- Formspree Form -->
-                    <form action="https://formspree.io/f/xkgdzrzk" method="POST" class="space-y-6">
-                        <div>
-                            <label for="name" class="block text-sm mb-2">Name</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4"
-                                placeholder="Your name"
-                            >
+                <div class="quick-form-container">
+                    <h3 class="text-2xl font-bold mb-6">Quick Contact Form</h3>
+                    <p class="text-gray-400 mb-6">Let's start the conversation. We'll get back to you within 24 hours.</p>
+                    
+                    <!-- Quick Contact Form -->
+                    <form id="quickContactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="quickName" class="block text-sm mb-2">Your Name *</label>
+                                <input
+                                    type="text"
+                                    id="quickName"
+                                    name="name"
+                                    required
+                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+                                    placeholder="John Doe"
+                                >
+                            </div>
+
+                            <div>
+                                <label for="quickEmail" class="block text-sm mb-2">Email Address *</label>
+                                <input
+                                    type="email"
+                                    id="quickEmail"
+                                    name="email"
+                                    required
+                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+                                    placeholder="john@company.com"
+                                >
+                            </div>
                         </div>
 
                         <div>
-                            <label for="email" class="block text-sm mb-2">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4"
-                                placeholder="your@email.com"
-                            >
-                        </div>
-
-                        <div>
-                            <label for="company" class="block text-sm mb-2">Company Name </label>
+                            <label for="quickCompany" class="block text-sm mb-2">Company Name</label>
                             <input
                                 type="text"
-                                id="company"
+                                id="quickCompany"
                                 name="company"
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4"
-                                placeholder="Your company name"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+                                placeholder="Your company"
                             >
                         </div>
 
                         <div>
-                            <label for="website" class="block text-sm mb-2">Company Website or Social Media </label>
-                            <input
-                                type="text"
-                                id="website"
-                                name="website"
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4"
-                                placeholder="https://"
+                            <label for="quickService" class="block text-sm mb-2">Interested Service</label>
+                            <select
+                                id="quickService"
+                                name="service"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3"
                             >
+                                <option value="">Select a service</option>
+                                <option value="web-design">Web Design</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="ecommerce">E-Commerce</option>
+                                <option value="seo">SEO Optimization</option>
+                                <option value="multiple">Multiple Services</option>
+                                <option value="not-sure">Not Sure Yet</option>
+                            </select>
                         </div>
 
                         <div>
-                            <label for="message" class="block text-sm mb-2">Tell us about your project</label>
+                            <label for="quickMessage" class="block text-sm mb-2">Brief Message</label>
                             <textarea
-                                id="message"
+                                id="quickMessage"
                                 name="message"
-                                rows="6"
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 resize-none"
-                                placeholder="Describe your project, timeline, budget, and any specific requirements..."
+                                rows="3"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 resize-none"
+                                placeholder="Tell us briefly about your project..."
                             ></textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 px-8 py-4 rounded-full transition-colors duration-300 flex items-center justify-center gap-2 hover-scale">
-                            <span>Send Message</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                            </svg>
-                        </button>
+                        <div class="space-y-4">
+                            <button 
+                                type="submit" 
+                                class="w-full bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-full transition-colors duration-300 flex items-center justify-center gap-2 hover-scale"
+                            >
+                                <span>Send Quick Message</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                            </button>
+
+                            <div class="text-center">
+                                <p class="text-gray-400 text-sm mb-3">Need to provide more details?</p>
+                                <a href="getstartedform.html" class="inline-flex items-center gap-2 text-orange-500 hover:text-orange-400 transition-colors">
+                                    <span>Go to Detailed Project Form</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
                     </form>
+
+                    <!-- Success Message (hidden by default) -->
+                    <div id="successMessage" class="form-success">
+                        <div class="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Message Sent!</h4>
+                        <p class="text-gray-400 mb-4">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                        <button onclick="resetForm()" class="text-orange-500 hover:text-orange-400 transition-colors">
+                            Send another message
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -616,7 +672,6 @@
                 <div>
                     <h4 class="font-bold mb-4">Company</h4>
                     <ul class="space-y-2 text-gray-400 text-sm">
-                       
                         <li><button onclick="scrollToSection('portfolio')" class="hover:text-orange-500 transition-colors">Portfolio</button></li>
                         <li><button onclick="scrollToSection('contact')" class="hover:text-orange-500 transition-colors">Contact</button></li>
                     </ul>
@@ -625,7 +680,6 @@
                 <div>
                     <h4 class="font-bold mb-4">Follow Us</h4>
                     <div class="flex gap-4">
-                       
                         <a href="https://www.linkedin.com/feed/" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-orange-500/20 hover:text-orange-500 transition-colors duration-300">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
@@ -672,12 +726,51 @@
             }
         });
 
-        // Form submission feedback
-        document.querySelector('form').addEventListener('submit', function(event) {
-            // Allow Formspree to handle the submission
-            // You could add additional validation or feedback here if needed
-            console.log('Form submitted to Formspree');
+        // Quick Contact Form Handler
+        document.getElementById('quickContactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('quickName').value,
+                email: document.getElementById('quickEmail').value,
+                company: document.getElementById('quickCompany').value,
+                service: document.getElementById('quickService').value,
+                message: document.getElementById('quickMessage').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // In a real application, you would send this data to your server
+            // For now, we'll just show a success message
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            document.getElementById('quickContactForm').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            // Here you would typically send the data to Formspree or your backend
+            // Example using Formspree:
+            // fetch('https://formspree.io/f/YOUR_FORM_ID', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(formData)
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     if (data.ok) {
+            //         showSuccessMessage();
+            //     }
+            // });
         });
+
+        // Reset form function
+        function resetForm() {
+            document.getElementById('quickContactForm').reset();
+            document.getElementById('quickContactForm').style.display = 'block';
+            document.getElementById('successMessage').classList.remove('show');
+        }
 
         // Intersection Observer for scroll animations
         const observerOptions = {
